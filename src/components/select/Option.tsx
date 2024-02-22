@@ -11,12 +11,14 @@ import styles from './Select.module.scss';
 type OptionProps = {
 	option: OptionType;
 	onClick: (value: OptionType['value']) => void;
+	customOptionClass?: string;
 };
 
 export const Option = (props: OptionProps) => {
 	const {
 		option: { value, title, optionClassName, className },
 		onClick,
+		customOptionClass,
 	} = props;
 	const optionRef = useRef<HTMLLIElement>(null);
 
@@ -34,7 +36,11 @@ export const Option = (props: OptionProps) => {
 
 	return (
 		<li
-			className={clsx(styles.option, styles[optionClassName || ''])}
+			className={clsx(
+				styles.option,
+				styles[optionClassName || ''],
+				customOptionClass
+			)}
 			value={value}
 			onClick={handleClick(value)}
 			tabIndex={0}
