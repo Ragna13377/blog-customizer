@@ -8,11 +8,11 @@ import {
 	fontSizeOptions,
 	OptionType,
 } from 'src/constants/articleProps';
-import { ComponentType, useRef, useState } from 'react';
+import { ComponentType, FormEvent, useState } from 'react';
 import { Select } from 'components/select';
 import { RadioGroup } from 'components/radio-group';
 
-type FormElementsType = {
+export type FormElementsType = {
 	name?: string;
 	title: string;
 	stateName: keyof ArticleStateType;
@@ -27,26 +27,15 @@ export function useAppStateChanges() {
 			setState({ ...state, [nameState]: value });
 		};
 	const resetState = () => {
-		applyChanges(defaultArticleState);
 		setState(defaultArticleState);
+		setAppliedState(defaultArticleState);
 	};
-	const applyState = (e?: React.MouseEvent<HTMLButtonElement>) => {
+	const applyState = (e?: FormEvent) => {
 		if (e) e.preventDefault();
-		applyChanges(state);
-	};
-	const applyChanges = (state: ArticleStateType) => {
-		if (appRef.current) {
-			appRef.current!.style.cssText = `
-            --font-family: ${state.fontFamilyOption.value};
-            --font-size: ${state.fontSizeOption.value};
-            --font-color: ${state.fontColor.value};
-            --container-width: ${state.contentWidth.value};
-            --bg-color: ${state.backgroundColor.value};
-        `;
-		}
+		setAppliedState(state);
 	};
 	const [state, setState] = useState(defaultArticleState);
-	const appRef = useRef<HTMLDivElement | null>(null);
+	const [appliedState, setAppliedState] = useState(defaultArticleState);
 	const formElements: FormElementsType[] = [
 		{
 			title: 'Шрифт',
@@ -87,7 +76,7 @@ export function useAppStateChanges() {
 	];
 	return {
 		state,
-		appRef,
+		appliedState,
 		formElements,
 		resetState,
 		applyState,
