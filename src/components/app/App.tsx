@@ -7,7 +7,7 @@ import { Article } from 'components/article';
 export const App = () => {
 	const { appliedState, ...appStateParameters } = useAppStateChanges();
 	return (
-		<div
+		<main
 			className={styles.main}
 			style={
 				{
@@ -20,6 +20,6 @@ export const App = () => {
 			}>
 			<ArticleParamsForm {...appStateParameters} />
 			<Article />
-		</div>
+		</main>
 	);
 };
