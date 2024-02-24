@@ -1,7 +1,7 @@
 import { EnvVariables } from './types/types';
 import { webpackPaths } from './webpack.paths';
-import { getCommonWebpack } from './build/webpack.common';
-import { getDevServer } from './build/weback.devServer';
+import { getCommonWebpack } from './buildWebpack/webpack.common';
+import { getDevServer } from './buildWebpack/weback.devServer';
 const { merge } = require('webpack-merge');
 import webpack from 'webpack';
 
